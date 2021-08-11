@@ -8,15 +8,7 @@ struct node{
 };
 typedef struct node node;
 
-int size = 3;
-
-void clear_buffer(){
-    int i;
-    do{
-        i = getchar();
-    }while ( i != '\n' && i != EOF );
-    return;
-}
+int size = 100;
 
 int hash(int key){
     return (key % size);
@@ -87,41 +79,76 @@ void initialize_hashtable(node *hashtable){
 }
 
 void show(node *hashtable){
-    printf("Index | Key | Value\n");
+    printf("\nIndex | Key | Value\n");
     for(int i=0; i<size; i++){
         printf("  %d   |%5.1d   |   %s\n",i,hashtable[i].key, hashtable[i].value);
     }
 }
 
 void main(){
-    node hashtable[50];
+    node hashtable[size];
     char value[10];
-    char key_str[10]; 
+    char key_str[10];
+    char input[10]; 
     int key, loop=1, checking_input=1;
 
     initialize_hashtable(hashtable);
-    show(hashtable);
 
     while(loop){
-        checking_input=1;
-        while(checking_input){
-            printf("\nInsert key: ");
-            fgets(key_str,10,stdin);
-            key = atoi(key_str); //convert str to int         
-            if(key==0 && key_str[0] != '0'){
-                printf("Invalid key\n");
-                checking_input = 1;
-            }
-            else{
-                printf("\nInsert value: ");
-                fgets(value,10,stdin);
-                value[strcspn(value, "\n")] = 0; //remove trailing \n
-                loop = insert(key, value, hashtable);
-                show(hashtable);
-                checking_input = 0;
-            }
-        } 
-    }
+        printf("\nAdd key/value(1)\nRemove key/value(2)\nSee hashtable(3)\nSearch by key(4)\nexit(5)\n-> ");
+        fgets(input, 9, stdin);
+        switch (input[0]){
+            default:
+                printf("Incorrect input.\n");
+                break;
 
-    find(69, hashtable);
+            case '1':
+                checking_input=1;
+                while(checking_input){
+                    printf("\nInsert key: ");
+                    fgets(key_str,9,stdin);
+                    key = atoi(key_str); //convert str to int         
+                    if(key==0 && key_str[0] != '0'){
+                        printf("Invalid key\n");
+                        checking_input = 1;
+                    }
+                    else{
+                        printf("\nInsert value: ");
+                        fgets(value,9,stdin);
+                        value[strcspn(value, "\n")] = 0; //remove trailing \n
+                        insert(key, value, hashtable);
+                        checking_input = 0;
+                    }
+                } 
+                break;
+
+            case '2':
+                break;
+    
+            case '3':
+                show(hashtable);
+                break;
+            
+            case '4':
+                checking_input=1;
+                while(checking_input){
+                    printf("\nInsert key: ");
+                    fgets(key_str,9,stdin);
+                    key = atoi(key_str); //convert str to int         
+                    if(key==0 && key_str[0] != '0'){
+                        printf("Invalid key\n");
+                        checking_input = 1;
+                    }
+                    else{
+                        checking_input=0;
+                    }
+                }
+                find(key, hashtable);
+                break;
+
+            case '5':
+                exit(1);
+                break;
+        }   
+    }
 }  
