@@ -5,6 +5,7 @@
 struct node{
     int key;
     char value[10];
+    node *next;
 };
 typedef struct node node;
 

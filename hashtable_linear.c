@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 struct node{
     int key;
@@ -8,13 +9,15 @@ struct node{
 };
 typedef struct node node;
 
-int size = 30;
+int size = 3000;
 
 int hash(int key){
     return (key % size);
 }
 
 void find(int key, node *hashtable){
+    clock_t begin = clock();
+
     int index = hash(key);
     if(hashtable[index].key == key){
         printf("Key/Value pair in index %d\n",index); 
@@ -23,7 +26,11 @@ void find(int key, node *hashtable){
         for(int i=index, k=0; i<size; i++){ 
             if(hashtable[i].key == key){
                 printf("Key/Value pair in index %d\n",i); 
-                break;
+            
+                clock_t end = clock();
+                double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+                printf("Time-> %f\n",time_spent);
+                return;
             }
             else if(i==size-1){
                 i=-1; //after loop it will end up as 0 and so it can check from the begining of the table
@@ -32,7 +39,7 @@ void find(int key, node *hashtable){
                 k++;
             }
             if(k==size-1){
-                printf("Key not in hashtable\n");
+                printf("Key %d not in hashtable\n", key);
                 return;
             }
         }
@@ -94,7 +101,7 @@ void main(){
 
     while(loop){
         printf("\nAdd key/value(1)\nRemove key/value(2)\nSee hashtable(3)\nSearch by key(4)\nexit(5)\n-> ");
-        fgets(input, 9, stdin);
+        fgets(input, 2, stdin);
         while ((getchar()) != '\n'); //clear stdin buffer
         switch (input[0]){
             default:
@@ -104,18 +111,16 @@ void main(){
             case '1':
                 checking_input=1;
                 while(checking_input){
-                    printf("\nInsert key: ");
+                    printf("\nInsert key (MAX 9 CHARS): ");
                     fgets(input,10,stdin);
-                    while ((getchar()) != '\n'); //clear stdin buffer
                     key = atoi(input); //convert str to int         
                     if(key==0 && input[0] != '0'){
                         printf("Invalid key\n");
                         checking_input = 1;
                     }
                     else{
-                        printf("\nInsert value: ");
+                        printf("\nInsert value (MAX 9 CHARS): ");
                         fgets(input,10,stdin);
-                        while ((getchar()) != '\n'); //clear stdin buffer
                         input[strcspn(input, "\n")] = 0; //remove trailing \n
                         insert(key, input, hashtable);
                         checking_input = 0;
@@ -133,9 +138,8 @@ void main(){
             case '4':
                 checking_input=1;
                 while(checking_input){
-                    printf("\nInsert key: ");
-                    fgets(input,9,stdin);
-                    while ((getchar()) != '\n'); //clear stdin buffer
+                    printf("\nInsert key (MAX 9 CHARS): ");
+                    fgets(input,10,stdin);                    
                     key = atoi(input); //convert str to int         
                     if(key==0 && input[0] != '0'){
                         printf("Invalid key\n");
