@@ -39,37 +39,26 @@ void find_linear_search(int key, node *hashtable){
 
 void find(int key, node *hashtable){
     clock_t begin = clock();
-
+    int node_number=0;
     int index = hash(key);
-    if(hashtable[index].key == key){ // se tiver sido guardado sem colision
-        printf("Key/Value pair in index %d\n",index); 
-        clock_t end = clock();
-        double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; 
-        printf("Time-> %f\n",time_spent);
-    }
-    else{
-        for(int i=index, k=0; i<size; i++){ // se tiver sido guardado com colision
-            if(hashtable[i].key == key){
-                printf("Key/Value pair in index %d\n",i); 
-            
-                clock_t end = clock();
-                double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; 
-                printf("Time-> %f\n",time_spent);
-
-                return;
-            }
-            else if(i==size-1){
-                i=-1; //after loop it will end up as 0 and so it can check from the begining of the table
-            }
-            else{
-                k++;
-            }
-            if(k==size-1){
-                printf("Key %d not in hashtable\n", key);
-                return;
-            }
+    
+    node *on = &hashtable[index];
+    while(1){
+        if(on->key == key){
+            printf("Key/Value pair in index %d, node number %d\n",index, node_number); 
+            return;
+        }
+        else if(on->next != NULL){
+            on = on->next;
+            node_number++;
+        }
+        else{
+            printf("Key %d not in hashtable\n", key);
+            return;
         }
     }
+    
+
 }
 
 void fill_table(node *hashtable){
@@ -127,13 +116,13 @@ void show(){
         node *on = hashtable[i].next; // on only starts as the on and then walks trough the LL
 
         if(on == NULL){
-            printf("\nI:%d|K:%d|V:%s|-->NULL\n",i,hashtable[i].key, hashtable[i].value);
+            printf("\n|I:%d|K:%d|V:%s|-->NULL\n",i,hashtable[i].key, hashtable[i].value);
 
         }
         else{
-            printf("I:%d|K:%d|V:%s|-->",i,hashtable[i].key, hashtable[i].value);
+            printf("|I:%d|K:%d|V:%s|-->",i,hashtable[i].key, hashtable[i].value);
             while(on != NULL){
-                printf("I:%d|K:%d|V:%s|-->",i,on->key, on->value);
+                printf("|I:%d|K:%d|V:%s|-->",i,on->key, on->value);
                 on = on->next;
             }
             printf("NULL\n");
