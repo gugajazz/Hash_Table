@@ -3,13 +3,14 @@
 #include <string.h>
 #include <time.h>
 
+#define size 100000000
+           //100,000,000
+
 struct node{
     int key;
     char value[10];
 };
 typedef struct node node;
-
-int size = 3000000;
 
 int hash(int key){
     return (key % size);
@@ -115,9 +116,9 @@ void show(node *hashtable){
 }
 
 void main(){
-    printf("UIII");
-    node hashtable[size];
-    char input[10]; 
+    
+    static node hashtable[size];
+    char input[50]; 
     int key, loop=1, checking_input=1;
 
     initialize_hashtable(hashtable);
@@ -134,8 +135,8 @@ void main(){
             case '1':
                 checking_input=1;
                 while(checking_input){
-                    printf("\nInsert key (MAX 9 CHARS): ");
-                    fgets(input,10,stdin);
+                    printf("\nInsert key (MAX 49 CHARS): ");
+                    fgets(input,50,stdin);
                     key = atoi(input); //convert str to int         
                     if(key==0 && input[0] != '0'){
                         printf("Invalid key\n");
@@ -161,8 +162,8 @@ void main(){
             case '4':
                 checking_input=1;
                 while(checking_input){
-                    printf("\nInsert key (MAX 9 CHARS): ");
-                    fgets(input,10,stdin);                    
+                    printf("\nInsert key (MAX 49 CHARS): ");
+                    fgets(input,50,stdin);                    
                     key = atoi(input); //convert str to int         
                     if(key==0 && input[0] != '0'){
                         printf("Invalid key\n");
@@ -182,8 +183,8 @@ void main(){
             case '6':
                 checking_input=1;
                 while(checking_input){
-                    printf("\nInsert key (MAX 9 CHARS): ");
-                    fgets(input,10,stdin);                    
+                    printf("\nInsert key (MAX 49 CHARS): ");
+                    fgets(input,50,stdin);                    
                     key = atoi(input); //convert str to int         
                     if(key==0 && input[0] != '0'){
                         printf("Invalid key\n");
