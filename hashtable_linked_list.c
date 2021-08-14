@@ -123,19 +123,17 @@ void initialize_hashtable(){
 }
 
 void show(){
-    printf("\nIndex | Key | Value\n");
     for(int i=0; i<size; i++){
         node *on = hashtable[i].next; // on only starts as the on and then walks trough the LL
 
         if(on == NULL){
-            printf("||  %d   |%5.1d   |   %s || \n ",i,hashtable[i].key, hashtable[i].value);
+            printf("\nI:%d|K:%d|V:%s|-->NULL\n",i,hashtable[i].key, hashtable[i].value);
 
         }
         else{
-            
-            printf("||  %d   |%5.1d   |   %s || --> ",i,hashtable[i].key, hashtable[i].value);
+            printf("I:%d|K:%d|V:%s|-->",i,hashtable[i].key, hashtable[i].value);
             while(on != NULL){
-                printf("||  %d   |%5.1d   |   %s || --> ",i,on->key, on->value);
+                printf("I:%d|K:%d|V:%s|-->",i,on->key, on->value);
                 on = on->next;
             }
             printf("NULL\n");
