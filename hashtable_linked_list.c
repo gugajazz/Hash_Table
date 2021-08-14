@@ -13,6 +13,8 @@ struct node{
 };
 typedef struct node node;
 
+static node hashtable[size];
+
 int hash(int key){
     return (key % size);
 }
@@ -77,36 +79,42 @@ void fill_table(node *hashtable){
     }
 }
 
-int insert(int key, char *value, node **hashtable){ //double pointer to change values
+void insert(int key, char *value){ //double pointer to change values
     int index;
     index = hash(key);
-    if(hashtable[index]->value[0] == '\0'){ //no colision
+    if(hashtable[index].value[0] == '\0'){ //no colision
         printf("No Colision\n");
-        hashtable[index]->key = key;
-        strcpy(hashtable[index]->value, value);
-        hashtable[index]->next = NULL;
-        printf("\nSaved at index->%d\n",index);
+        hashtable[index].key = key;
+        strcpy(hashtable[index].value, value);
+        hashtable[index].next = NULL;
+        printf("\nSaved at index.%d\n",index);
     }
     else{ //colision
         printf("Colision\n");
 
-        node *on = hashtable[index]->next; // on only starts at the on and then walks trough the LL
+        node *on = &hashtable[index]; // on only starts at the on and then walks trough the LL
                                             // (points to the next node after the first)
-        node *head = hashtable[index];
+        node *head = &hashtable[index];
         node *new = malloc(sizeof(node));
 
         new->key = key;
         strcpy(new->value, value);
         new->next = NULL;
+
+        if(on->next == NULL){
+            on->next = new;
+            return;
+        }
         
         while(on->next != NULL){
             on = on->next;
         }
+        
         on->next = new;
     }
 }
 
-void initialize_hashtable(node *hashtable){
+void initialize_hashtable(){
     for(int i=0; i<size; i++){
         hashtable[i].key = 0;
         hashtable[i].value[0] = '\0';
@@ -114,7 +122,7 @@ void initialize_hashtable(node *hashtable){
     }
 }
 
-void show(node *hashtable){
+void show(){
     printf("\nIndex | Key | Value\n");
     for(int i=0; i<size; i++){
         node *on = hashtable[i].next; // on only starts as the on and then walks trough the LL
@@ -137,7 +145,6 @@ void show(node *hashtable){
 
 void main(){
     
-    static node hashtable[size];
     char input[10]; 
     int key, loop=1, checking_input=1;
 
@@ -166,7 +173,7 @@ void main(){
                         printf("\nInsert value (MAX 9 CHARS): ");
                         fgets(input,10,stdin);
                         input[strcspn(input, "\n")] = 0; //remove trailing \n
-                        insert(key, input, &hashtable);
+                        insert(key, input);
                         checking_input = 0;
                     }
                 } 
@@ -176,7 +183,7 @@ void main(){
                 break;
     
             case '3':
-                show(hashtable);
+                show();
                 break;
             
             case '4':
