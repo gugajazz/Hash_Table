@@ -69,14 +69,21 @@ void find(int key, node *hashtable){
     }
 }
 
+void fill_table(node *hashtable){
+    char filled[10] = "FILLED";
+    for(int i=99000000; i<99999995; i++){
+        strcpy(hashtable[i].value, filled);
+    }
+}
+
 int insert(int key, char *value, node *hashtable){
     int index;
     index = hash(key);
-    printf("\nindex->%d\n",index);
     if(hashtable[index].value[0] == '\0'){ //no colision
         printf("No Colision\n");
         hashtable[index].key = key;
         strcpy(hashtable[index].value, value);
+        printf("\nSaved at index->%d\n",index);
     }
     else{ //colision
         printf("Colision\n");
@@ -84,6 +91,7 @@ int insert(int key, char *value, node *hashtable){
             if(hashtable[i].value[0] == '\0'){
                 hashtable[i].key = key;
                 strcpy(hashtable[i].value, value);
+                printf("\nSaved at index->%d\n",i);
                 break;
             }
             else if(i==size-1){
@@ -118,7 +126,7 @@ void show(node *hashtable){
 void main(){
     
     static node hashtable[size];
-    char input[50]; 
+    char input[10]; 
     int key, loop=1, checking_input=1;
 
     initialize_hashtable(hashtable);
@@ -196,6 +204,9 @@ void main(){
                 }
                 find_linear_search(key,hashtable);
                 break;
+            case '7': // just to test the time it takes
+                fill_table(hashtable);
+                printf("DONE\n");
         }   
     }
 }  
