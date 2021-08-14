@@ -37,7 +37,7 @@ void find_linear_search(int key, node *hashtable){
     
 }
 
-void find(int key, node *hashtable){
+int find(int key, int verbose){ // returns 1 if found & zero if not in table
     clock_t begin = clock();
     int node_number=0;
     int index = hash(key);
@@ -45,20 +45,22 @@ void find(int key, node *hashtable){
     node *on = &hashtable[index];
     while(1){
         if(on->key == key){
-            printf("Key/Value pair in index %d, node number %d\n",index, node_number); 
-            return;
+            if(verbose==1){
+                printf("Key/Value pair in index %d, node number %d\n",index, node_number); 
+            }
+            return 1;
         }
         else if(on->next != NULL){
             on = on->next;
             node_number++;
         }
         else{
-            printf("Key %d not in hashtable\n", key);
-            return;
+            if(verbose==1){
+                printf("Key %d not in hashtable\n", key);
+            }
+            return 0;
         }
     }
-    
-
 }
 
 void fill_table(node *hashtable){
@@ -156,6 +158,9 @@ void main(){
                         printf("Invalid key\n");
                         checking_input = 1;
                     }
+                    else if(find(key, 0) == 1){
+                        printf("Key already in hashtable\n");
+                    }
                     else{
                         printf("\nInsert value (MAX 9 CHARS): ");
                         fgets(input,10,stdin);
@@ -187,7 +192,7 @@ void main(){
                         checking_input=0;
                     }
                 }
-                find(key, hashtable);
+                find(key, 1);
                 break;
 
             case '5':
