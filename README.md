@@ -16,7 +16,7 @@ Both implementations allow the searching of desired keys trough a linear or hash
 
 Open the folder and run 
 ``gcc hashtable_linked_list.c -o hashtable_linked_list`` -> ``./hashtable_linked_list``
-or
+<br>or<br>
 ``gcc hashtable_linear.c -o hashtable_linear`` -> ``./hashtable_linear``
 
 
