@@ -31,7 +31,7 @@ void find_linear_search(int key, node *hashtable, int verbose){
                     printf("Key/Value pair in index %d, node number %d\n",i, node_number); 
                     clock_t end = clock();
                     double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; 
-                    printf("Time-> %f\n",time_spent);
+                    printf("Time spent-> %f\n",time_spent);
                 }
                 return;
             }
@@ -50,7 +50,7 @@ void find_linear_search(int key, node *hashtable, int verbose){
     printf("Key %d not in hashtable\n", key);
     clock_t end = clock();
     double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; 
-    printf("Time-> %f\n",time_spent);
+    printf("Time Spent-> %f\n",time_spent);
     return;
     
 }
@@ -67,7 +67,7 @@ int find(int key, int verbose){ // returns 1 if found & zero if not in table
                 printf("Key/Value pair in index %d, node number %d\n",index, node_number); 
                 clock_t end = clock();
                 double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; 
-                printf("Time-> %f\n",time_spent);
+                printf("Time spent-> %f\n",time_spent);
             }
             return 1;
         }
@@ -80,7 +80,7 @@ int find(int key, int verbose){ // returns 1 if found & zero if not in table
                 printf("Key %d not in hashtable\n", key);
                 clock_t end = clock();
                 double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; 
-                printf("Time-> %f\n",time_spent);
+                printf("Time spent-> %f\n",time_spent);
             }
             return 0;
         }

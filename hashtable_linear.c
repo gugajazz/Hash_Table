@@ -24,12 +24,15 @@ void find_linear_search(int key, node *hashtable){
             printf("Key/Value pair in index %d\n",i); 
             clock_t end = clock();
             double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; 
-            printf("Time-> %f\n",time_spent);
+            printf("Time spent-> %f\n",time_spent);
             return;
         }
     }
     
     printf("Key %d not in hashtable\n", key);
+    clock_t end = clock();
+    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; 
+    printf("Time spent-> %f\n",time_spent);
     return;
     
 }
@@ -42,16 +45,15 @@ void find(int key, node *hashtable){
         printf("Key/Value pair in index %d\n",index); 
         clock_t end = clock();
         double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; 
-        printf("Time-> %f\n",time_spent);
+        printf("Time spent-> %f\n",time_spent);
     }
     else{
         for(int i=index, k=0; i<size; i++){ // se tiver sido guardado com colision
             if(hashtable[i].key == key){
                 printf("Key/Value pair in index %d\n",i); 
-            
                 clock_t end = clock();
                 double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; 
-                printf("Time-> %f\n",time_spent);
+                printf("Time spent-> %f\n",time_spent);
 
                 return;
             }
@@ -63,6 +65,9 @@ void find(int key, node *hashtable){
             }
             if(k==size-1){
                 printf("Key %d not in hashtable\n", key);
+                clock_t end = clock();
+                double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; 
+                printf("Time spent-> %f\n",time_spent);
                 return;
             }
         }
@@ -132,7 +137,7 @@ void main(){
     initialize_hashtable(hashtable);
 
     while(loop){
-        printf("\nAdd key/value(1)\nRemove key/value(2)\nSee hashtable(3)\nSearch by key(4)\nexit(5)\nLinear search(6)\n-> ");
+        printf("\nAdd key/value(1)\nRemove key/value(2)\nSee hashtable(3)\nSearch by key(4)\nLinear search(5)\nexit(6)\n-> ");
         fgets(input, 2, stdin);
         while ((getchar()) != '\n'); //clear stdin buffer
         switch (input[0]){
@@ -185,10 +190,6 @@ void main(){
                 break;
 
             case '5':
-                exit(1);
-                break;
-
-            case '6':
                 checking_input=1;
                 while(checking_input){
                     printf("\nInsert key (MAX 49 CHARS): ");
@@ -204,9 +205,10 @@ void main(){
                 }
                 find_linear_search(key,hashtable);
                 break;
-            case '7': // just to test the time it takes
-                fill_table(hashtable);
-                printf("DONE\n");
+
+            case '6':
+                exit(1);
+                break;
         }   
     }
 }  
