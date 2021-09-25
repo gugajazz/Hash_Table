@@ -78,11 +78,10 @@ void insert(int key, char *value){ //double pointer to change values
         hashtable[index].key = key;
         strcpy(hashtable[index].value, value);
         hashtable[index].next = NULL;
-        printf("\nSaved at index.%d\n",index);
+        printf("\nSaved at index->%d Node->0\n",index);
     }
     else{ //colision
-        printf("Colision\n");
-
+        int node_index = 1;
         node *on = &hashtable[index]; // on only starts at the on and then walks trough the LL
                                             // (points to the next node after the first)
         node *head = &hashtable[index];
@@ -94,14 +93,20 @@ void insert(int key, char *value){ //double pointer to change values
 
         if(on->next == NULL){
             on->next = new;
+            printf("Colision\n");
+            printf("\nSaved at index->%d Node->1\n",index);
             return;
         }
         
         while(on->next != NULL){
             on = on->next;
+            node_index++;
         }
         
         on->next = new;
+
+        printf("Colision\n");
+        printf("\nSaved at index->%d Node->%d\n",index,node_index);
     }
 }
 
@@ -140,7 +145,7 @@ void main(){
     initialize_hashtable(hashtable);
 
     while(loop){
-        printf("\nAdd key/value(1)\nRemove key/value(2)\nSee hashtable(3)\nSearch by key(4)\nexit(5)\nLinear search(6)\n-> ");
+        printf("\nAdd key/value(1)\nRemove key/value(2)\nSee hashtable(3)\nSearch by key(4)\nLinear search(5)\nExit(6)\n-> ");
         fgets(input, 2, stdin);
         while ((getchar()) != '\n'); //clear stdin buffer
         switch (input[0]){
@@ -196,10 +201,6 @@ void main(){
                 break;
 
             case '5':
-                exit(1);
-                break;
-
-            case '6':
                 checking_input=1;
                 while(checking_input){
                     printf("\nInsert key (MAX 49 CHARS): ");
@@ -215,9 +216,10 @@ void main(){
                 }
                 find_linear_search(key,hashtable);
                 break;
-            case '7': // just to test the time it takes
-                fill_table(hashtable);
-                printf("DONE\n");
+
+            case '6':
+                exit(1);
+                break;
         }   
     }
 }  
