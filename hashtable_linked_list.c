@@ -3,8 +3,8 @@
 #include <string.h>
 #include <time.h>
 
-#define size 10
-           //100,000,000
+#define size 10000000
+           //10,000,000
 
 struct node{
     int key;
@@ -19,20 +19,38 @@ int hash(int key){
     return (key % size);
 }
 
-void find_linear_search(int key, node *hashtable){
+void find_linear_search(int key, node *hashtable, int verbose){
+    int node_number=0;
     clock_t begin = clock();
 
     for(int i=0; i<size; i++){
-        if(hashtable[i].key==key){
-            printf("Key/Value pair in index %d\n",i); 
-            clock_t end = clock();
-            double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; 
-            printf("Time-> %f\n",time_spent);
-            return;
+        node *on = &hashtable[i];
+        while(1){
+            if(on->key == key){
+                if(verbose==1){
+                    printf("Key/Value pair in index %d, node number %d\n",i, node_number); 
+                    clock_t end = clock();
+                    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; 
+                    printf("Time-> %f\n",time_spent);
+                }
+                return;
+            }
+            
+            if(on->next == NULL){
+                break;
+            }
+            
+            else{
+                on = on->next;
+                node_number++;
+            }
         }
     }
     
     printf("Key %d not in hashtable\n", key);
+    clock_t end = clock();
+    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; 
+    printf("Time-> %f\n",time_spent);
     return;
     
 }
@@ -47,6 +65,9 @@ int find(int key, int verbose){ // returns 1 if found & zero if not in table
         if(on->key == key){
             if(verbose==1){
                 printf("Key/Value pair in index %d, node number %d\n",index, node_number); 
+                clock_t end = clock();
+                double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; 
+                printf("Time-> %f\n",time_spent);
             }
             return 1;
         }
@@ -57,6 +78,9 @@ int find(int key, int verbose){ // returns 1 if found & zero if not in table
         else{
             if(verbose==1){
                 printf("Key %d not in hashtable\n", key);
+                clock_t end = clock();
+                double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; 
+                printf("Time-> %f\n",time_spent);
             }
             return 0;
         }
@@ -214,7 +238,7 @@ void main(){
                         checking_input=0;
                     }
                 }
-                find_linear_search(key,hashtable);
+                find_linear_search(key,hashtable,1);
                 break;
 
             case '6':
