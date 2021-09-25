@@ -3,7 +3,7 @@
 #include <string.h>
 #include <time.h>
 
-#define size 10000000
+#define size 10
            //10,000,000
 
 struct node{
@@ -95,6 +95,7 @@ void fill_table(node *hashtable){
 }
 
 void insert(int key, char *value){ //double pointer to change values
+    clock_t begin = clock();
     int index;
     index = hash(key);
     if(hashtable[index].value[0] == '\0'){ //no colision
@@ -103,6 +104,9 @@ void insert(int key, char *value){ //double pointer to change values
         strcpy(hashtable[index].value, value);
         hashtable[index].next = NULL;
         printf("\nSaved at index->%d Node->0\n",index);
+        clock_t end = clock();
+        double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; 
+        printf("Time spent-> %f\n",time_spent);
     }
     else{ //colision
         int node_index = 1;
@@ -119,6 +123,9 @@ void insert(int key, char *value){ //double pointer to change values
             on->next = new;
             printf("Colision\n");
             printf("\nSaved at index->%d Node->1\n",index);
+            clock_t end = clock();
+            double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; 
+            printf("Time spent-> %f\n",time_spent);
             return;
         }
         
@@ -131,6 +138,9 @@ void insert(int key, char *value){ //double pointer to change values
 
         printf("Colision\n");
         printf("\nSaved at index->%d Node->%d\n",index,node_index);
+        clock_t end = clock();
+        double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; 
+        printf("Time spent-> %f\n",time_spent);
     }
 }
 
@@ -147,13 +157,13 @@ void show(){
         node *on = hashtable[i].next; // on only starts as the on and then walks trough the LL
 
         if(on == NULL){
-            printf("\n|I:%d|K:%d|V:%s|-->NULL\n",i,hashtable[i].key, hashtable[i].value);
+            printf("\n|I:%d|K:%d|V:%s| --> NULL\n",i,hashtable[i].key, hashtable[i].value);
 
         }
         else{
-            printf("|I:%d|K:%d|V:%s|-->",i,hashtable[i].key, hashtable[i].value);
+            printf("\n|I:%d|K:%d|V:%s| --> ",i,hashtable[i].key, hashtable[i].value);
             while(on != NULL){
-                printf("|I:%d|K:%d|V:%s|-->",i,on->key, on->value);
+                printf("|I:%d|K:%d|V:%s| --> ",i,on->key, on->value);
                 on = on->next;
             }
             printf("NULL\n");
@@ -242,6 +252,7 @@ void main(){
                 break;
 
             case '6':
+                printf("Bye");
                 exit(1);
                 break;
         }   

@@ -3,7 +3,7 @@
 #include <string.h>
 #include <time.h>
 
-#define size 100000000
+#define size 10
            //100,000,000
 
 struct node{
@@ -82,6 +82,7 @@ void fill_table(node *hashtable){
 }
 
 int insert(int key, char *value, node *hashtable){
+    clock_t begin = clock();
     int index;
     index = hash(key);
     if(hashtable[index].value[0] == '\0'){ //no colision
@@ -89,6 +90,9 @@ int insert(int key, char *value, node *hashtable){
         hashtable[index].key = key;
         strcpy(hashtable[index].value, value);
         printf("\nSaved at index->%d\n",index);
+        clock_t end = clock();
+        double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; 
+        printf("Time spent-> %f\n",time_spent);
     }
     else{ //colision
         printf("Colision\n");
@@ -97,6 +101,9 @@ int insert(int key, char *value, node *hashtable){
                 hashtable[i].key = key;
                 strcpy(hashtable[i].value, value);
                 printf("\nSaved at index->%d\n",i);
+                clock_t end = clock();
+                double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; 
+                printf("Time spent-> %f\n",time_spent);
                 break;
             }
             else if(i==size-1){
@@ -107,6 +114,9 @@ int insert(int key, char *value, node *hashtable){
             }
             if(k==size-1){
                 printf("Hastable is full\n");
+                clock_t end = clock();
+                double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; 
+                printf("Time spent-> %f\n",time_spent);
                 return 0;
             }
         }
@@ -207,6 +217,7 @@ void main(){
                 break;
 
             case '6':
+                printf("Bye");
                 exit(1);
                 break;
         }   
